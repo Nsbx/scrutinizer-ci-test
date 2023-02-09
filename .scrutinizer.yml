@@ -1,0 +1,26 @@
+filter:
+  path: [src/*]
+  excluded_paths:
+    - tests/*
+    - vendor/*
+
+build:
+  image: default-bionic
+  environment:
+    php:
+      version: 8.1
+      ini:
+        memory_limit: "-1"
+    mongodb: false
+    redis: false
+    mysql: false
+    postgresql: false
+  dependencies:
+    before:
+      - "rm .php-version"
+    override:
+      - composer install -n
+  tests:
+    before:
+      -   command: "rm .php-version"
+    override: true
